@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <string.h>
+
+// Function to check palindrome
+void checkPalindrome(char str[]) {
+    int len = strlen(str);
+    int isPalindrome = 1;
+
+    for (int i = 0; i < len / 2; i++) {
+        if (str[i] != str[len - i - 1]) {
+            isPalindrome = 0;
+            break;
+        }
+    }
+
+    if (isPalindrome)
+        printf("The string is a palindrome.\n");
+    else
+        printf("The string is not a palindrome.\n");
+}
+
+int main() {
+    char str1[100], str2[100], temp[100];
+    char *sub;
+
+    // Input first string
+    printf("Enter a string: ");
+    if (fgets(str1, sizeof(str1), stdin) == NULL) {
+        printf("Input error.\n");
+        return 1;
+    }
+    str1[strcspn(str1, "\n")] = '\0'; // Remove newline
+
+    // Check empty string
+    if (strlen(str1) == 0) {
+        printf("Empty string entered.\n");
+        return 1;
+    }
+
+    // i) Length
+    printf("\n1. Length of string: %zu\n", strlen(str1));
+
+    // ii) Reverse string
+    strcpy(temp, str1);
+    int n = strlen(temp);
+    for (int i = 0; i < n / 2; i++) {
+        char c = temp[i];
+        temp[i] = temp[n - i - 1];
+        temp[n - i - 1] = c;
+    }
+    printf("2. Reversed string: %s\n", temp);
+
+    // Input second string
+    printf("\nEnter another string for comparison/substring check: ");
+    if (fgets(str2, sizeof(str2), stdin) == NULL) {
+        printf("Input error.\n");
+        return 1;
+    }
+    str2[strcspn(str2, "\n")] = '\0';
+
+    // iii) Equality check
+    if (strcmp(str1, str2) == 0)
+        printf("3. Strings are equal.\n");
+    else
+        printf("3. Strings are not equal.\n");
+
+    // iv) Palindrome check
+    printf("4. Palindrome Check: ");
+    checkPalindrome(str1);
+
+    // v) Substring check
+    sub = strstr(str1, str2);
+    if (sub)
+        printf("5. '%s' is a substring of '%s'.\n", str2, str1);
+    else
+        printf("5. '%s' is NOT a substring of '%s'.\n", str2, str1);
+
+    return 0;
+}
