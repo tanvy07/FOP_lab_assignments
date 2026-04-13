@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <math.h>
+
+#define PI 3.141592653589793
+
+int main() {
+    double x, rad, sum, term;
+    int n, i;
+
+    // Input
+    printf("Enter value of x (in degrees): ");
+    scanf("%lf", &x);
+
+    printf("Enter number of terms: ");
+    if (scanf("%d", &n) != 1 || n <= 0) {
+        printf("Invalid input for number of terms.\n");
+        return 1;
+    }
+
+    // Convert degrees to radians
+    rad = x * (PI / 180.0);
+
+    // Initialize
+    sum = rad;   // First term
+    term = rad;
+
+    // Taylor series calculation
+    for (i = 1; i < n; i++) {
+        term = term * (-rad * rad) / ((2 * i) * (2 * i + 1));
+        sum += term;
+    }
+
+    // Output
+    printf("\nCalculated sin(%.2lf) = %.6lf\n", x, sum);
+    printf("Library sin(%.2lf)   = %.6lf\n", x, sin(rad));
+
+    return 0;
+}
